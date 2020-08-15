@@ -1,0 +1,116 @@
+.aero {
+  font-size: 15em;
+}
+app-flight {
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+.searchcomponent {
+  margin-top: 0 !important;
+  padding: 2em;
+  border-radius: 10px;
+  background: rgba(16, 17, 53, 0.9);
+  -webkit-box-shadow: 20px 11px 113px -32px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 20px 11px 113px -32px rgba(0, 0, 0, 1);
+  box-shadow: 20px 11px 113px -32px rgba(0, 0, 0, 1);
+}
+.flight {
+  font-size: 20vw !important;
+}
+a {
+  text-decoration: none;
+  color: white;
+}
+.flightcomponent .col-3 {
+  text-align: center;
+}
+$paragraph-font-size-lg: 18px;
+$paragraph-font-size-md: 16px;
+$paragraph-font-size-sm: 14px;
+$paragraph-font-size-xs: 12px;
+.flightcomponent .col-3 p {
+  // font-weight: bold !important;
+  // font-size: 20px;
+  margin: auto 0;
+  font-size: $paragraph-font-size-lg;
+
+  @media (max-width: 1024px) {
+    font-size: $paragraph-font-size-md;
+  }
+
+  @media (max-width: 640px) {
+    font-size: $paragraph-font-size-sm;
+  }
+
+  @media (max-width: 480px) {
+    font-size: $paragraph-font-size-xs;
+  }
+}
+
+@media (min-width: 300px) and (max-width: 768px) {
+  .sidenavcomponent {
+    display: none;
+  }
+  .sidenavcomponentresponsive {
+    display: block;
+    padding: 10px;
+  }
+}
+@media (min-width: 769px) {
+  .sidenavcomponent {
+    display: block;
+  }
+  .sidenavcomponentresponsive {
+    display: none;
+  }
+}
+
+.flightcomponent {
+  padding: 1em;
+
+  width: 100% !important;
+
+  -webkit-box-shadow: 20px 11px 113px -32px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 20px 11px 113px -32px rgba(0, 0, 0, 1);
+  box-shadow: 20px 11px 113px -32px rgba(0, 0, 0, 1);
+}
+.space {
+  margin-bottom: 40px;
+}
+.sidenavcomponent {
+  width: 100% !important;
+  margin: 0 auto !important;
+  line-height: 2.5em;
+  font-size: 1em;
+  color: white !important;
+  -webkit-box-shadow: 20px 11px 113px -32px rgba(0, 0, 0, 1);
+  -moz-box-shadow: 20px 11px 113px -32px rgba(0, 0, 0, 1);
+  box-shadow: 20px 11px 113px -32px rgba(0, 0, 0, 1);
+  padding: 20px;
+}
+// .row {
+//     text-align: center;
+//   }
+// .col-3 {
+//
+// }
+.wrapper {
+  color: white !important;
+}
+
+.module:hover {
+  box-shadow: 0 1px 3px 0px rgba(187, 10, 10, 0.459);
+}
+.page-header{
+  /* The image used */
+  background-image: url("../../../assets/img/book-flight.jpg");
+
+  /* Set a specific height */
+  height: 500px;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

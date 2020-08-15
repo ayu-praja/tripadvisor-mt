@@ -1,0 +1,20 @@
+{
+  "holidaycities": [
+    { "city_name": "Kerala" },
+    { "city_name": "Darjeeling" },
+    { "city_name": "Tamil Nadu" },
+    { "city_name": "Shimla" },
+    { "city_name": "Sikkim" },
+    { "city_name": "Nainital" },
+    { "city_name": "Manali" },
+    { "city_name": "Ooty" },
+    { "city_name": "Coorg" },
+    { "city_name": "Ladakh" },
+    { "city_name": "Himachal Pradesh" },
+    { "city_name": "Meghalaya" },
+    { "city_name": "Udaipur" },
+    { "city_name": "Gujarat" },
+    { "city_name": "Karnataka" },
+    { "city_name": "Goa" }
+  ]
+}

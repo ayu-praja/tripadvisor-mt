@@ -1,0 +1,143 @@
+<nav
+  class="navbar navbar-expand-lg fixed-top navbar-transparent"
+  color-on-scroll="100"
+  id="navbar-top"
+>
+  <div class="container" routerLinkActive="active">
+    <div class="navbar-translate">
+      <a
+        class="navbar-brand"
+        placement="bottom"
+        routerLink="/home"
+        style="color: white;"
+        tooltip="One stop solution for all your travel needs"
+      >
+        <i class="tim-icons icon-world"></i><span> Ta• </span> Trip Advisor
+      </a>
+      <button
+        aria-controls="navigation-index"
+        aria-label="Toggle navigation"
+        class="navbar-toggler navbar-toggler"
+        [attr.aria-expanded]="!isCollapsed"
+        (click)="isCollapsed = !isCollapsed"
+        id="navigation"
+        type="button"
+      >
+        <span class="navbar-toggler-bar bar1"> </span>
+        <span class="navbar-toggler-bar bar2"> </span>
+        <span class="navbar-toggler-bar bar3"> </span>
+      </button>
+    </div>
+    <div
+      class="navbar-collapse justify-content-end"
+      [collapse]="!isCollapsed"
+      id="navigation"
+    >
+      <div class="navbar-collapse-header">
+        <div class="row">
+          <div class="col-6 collapse-brand"><a> Ta• </a></div>
+          <div class="col-6 collapse-close text-right">
+            <button
+              aria-controls="navigation-index"
+              aria-label="Toggle navigation"
+              class="navbar-toggler"
+              [attr.aria-expanded]="false"
+              (click)="isCollapsed = !isCollapsed"
+              id="navigation"
+              type="button"
+            >
+              <i class="tim-icons icon-simple-remove"> </i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <ul class="navbar-nav">
+        <!--  *ngIf="authority === 'user'" -->
+        <li class="nav-item p-0">
+          <a
+            class="nav-link"
+            (click)="flightClicked()"
+            routerLink="/book-flight"
+            placement="bottom"
+            tooltip="Search for Flight"
+          >
+            <!-- <i class="fa fa-plane" aria-hidden="true"></i> -->
+            <i class="las la-plane-departure" style="font-size: 30px;"></i>
+            <p class="d-lg-none d-xl-none">Search for Flight</p>
+          </a>
+        </li>
+        <!--  *ngIf="authority === 'user'" -->
+        <li class="nav-item p-0">
+          <a
+            class="nav-link"
+            (click)="hotelClicked()"
+            routerLink="/book-hotel"
+            placement="bottom"
+            tooltip="Search for Hotels"
+          >
+            <i class="las la-hotel" style="font-size: 30px;"></i>
+
+            <p class="d-lg-none d-xl-none">Search for Hotels</p>
+          </a>
+        </li>
+        <!--  *ngIf="authority === 'user'" -->
+        <li class="nav-item p-0">
+          <a
+            class="nav-link"
+            (click)="holidayClicked()"
+            routerLink="/holiday-package"
+            placement="bottom"
+            tooltip="Holiday Packages"
+          >
+            <i class="las la-parachute-box" style="font-size: 30px;"></i>
+
+            <p class="d-lg-none d-xl-none">Search Holiday Packages</p>
+          </a>
+        </li>
+        <!-- ================== -->
+        <li class="nav-item p-0">
+            <a
+              class="nav-link"
+              *ngIf="authority === 'admin'"
+              routerLink="/add-package"
+              placement="bottom"
+              tooltip="Admin Panel"
+            >
+            <i class="las la-user-shield" style="font-size: 30px;"></i>
+              <p class="d-lg-none d-xl-none">Admin Panel</p>
+            </a>
+          </li>
+        <li class="nav-item p-0">
+          <a
+            class="nav-link"
+            *ngIf="!authority && !socialLogin"
+            (click)="logInClicked()"
+            routerLink="/auth/login"
+            placement="bottom"
+            tooltip="Log In"
+          >
+            <i class="las la-user-lock" style="font-size: 30px;"></i>
+            <p class="d-lg-none d-xl-none">Log In</p>
+          </a>
+        </li>
+        <li class="nav-item p-0">
+          <a
+            class="nav-link"
+            placement="bottom"
+            *ngIf="authority || socialLogin"
+            (click)="logout()"
+            tooltip="Log Out"
+          >
+            <i style="font-size: 30px;cursor: pointer;" class="las la-user-alt"> </i>
+            <p class="d-lg-none d-xl-none">Log Out</p>
+          </a>
+        </li>
+        <li class="nav-item p-0" style="margin-left: 10px;" *ngIf="socialLogin">
+            <img src="{{image}}" alt="Avatar" class="avatar">
+          </li>
+
+        <!-- ========= -->
+      </ul>
+    </div>
+  </div>
+</nav>

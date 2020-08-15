@@ -1,0 +1,169 @@
+<app-header></app-header>
+<div class="wrapper content-center">
+  <div class="container page-header">
+    <h1>Add Package</h1>
+    <hr class="bg-primary" />
+    <br />
+    <form autocomplete="off"  *ngIf="!statusFlag">
+     
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Package Type</label>
+          <input
+            type="text"
+            [(ngModel)]="addPackage.packageType"
+            class="form-control"
+            id="inputEmail4"
+            name="packageType"
+            placeholder="Package Type"
+            
+          />
+        </div>
+        
+            
+        <div class="form-group col-md-6">
+          <label for="inputPassword">Package Name</label>
+          <input
+            type="text"
+            name="packageName"
+            [(ngModel)]="addPackage.packageName"
+            class="form-control"
+            id="inputPassword"
+            placeholder="Package Name"
+          
+          />
+        </div>
+      </div>
+      <div class="form-row">
+            <div class="form-group col-md-6">
+            <label for="inputPassword4">Place</label>
+            <fieldset>
+                    <select
+                      class="form-control"
+                      [(ngModel)]="destination"
+                      name="destination"
+                    >
+                      <option value="Destination" disabled selected hidden
+                        >City</option
+                      >
+                      <option
+                        *ngFor="let city of cities"
+                        class="bg-dark"
+                        selected
+                        [(ngValue)]="city"
+                      >
+                        {{ city.city }}
+                      </option>
+                    </select>
+                  </fieldset>
+                  </div>
+                  <div class="form-group col-md-6">
+                        <label for="inputPassword43">Budget</label>
+                        <input
+                          type="number"
+                          name="budget"
+                          [(ngModel)]="addPackage.budget"
+                          class="form-control"
+                          id="inputPassword43"
+                          placeholder="Budget"
+                          required
+                        />
+                  </div>
+          </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Number of Days</label>
+          <input
+            type="number"
+            name="days"
+            [(ngModel)]="addPackage.days"
+            class="form-control"
+            id="inputEmail4"
+            placeholder="Number of Days"
+            required
+          />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Number of Nights</label>
+          <input
+            type="number"
+            name="nights"
+            [(ngModel)]="addPackage.nights"
+            class="form-control"
+            id="inputPassword4"
+            placeholder="Number of Nights"
+            required
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputAddress">Package Image</label>
+        <input
+          type="text"
+          name="package_image"
+          [(ngModel)]="addPackage.package_image"
+          class="form-control"
+          id="inputAddress"
+          placeholder="Package Image"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea3">Package Description</label>
+        <textarea
+          class="form-control"
+          name="package_description"
+          [(ngModel)]="addPackage.package_description"
+          id="exampleFormControlTextarea3"
+          rows="1"
+          required
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea2">Package Highlight</label>
+        <textarea
+          class="form-control"
+          name="package_highlight"
+          [(ngModel)]="addPackage.package_highlight"
+          id="exampleFormControlTextarea2"
+          rows="1"
+          placeholder="Use | to seperate highlights"
+          required
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Package Activity</label>
+        <textarea
+          class="form-control"
+          name="package_activity"
+          [(ngModel)]="addPackage.package_activity"
+          id="exampleFormControlTextarea1"
+          rows="1"
+          required
+          placeholder="Use , to seperate activities"
+        ></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary" (click)="onSubmit()">Add</button>
+    </form>
+    <div *ngIf="statusFlag">
+      <alert [type]="'info'">
+        {{message}}
+      </alert>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
+<div>
+  <ngx-spinner
+    bdOpacity="0.9"
+    bdColor="rgba(47,44,44,0.57)"
+    size="medium"
+    color="#e00909"
+    type="ball-climbing-dot"
+    [fullScreen]="true"
+  >
+    <p style="color: white">Adding Holiday Package...</p>
+  </ngx-spinner>
+</div>

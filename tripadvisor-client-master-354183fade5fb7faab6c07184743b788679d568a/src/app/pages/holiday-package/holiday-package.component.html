@@ -1,0 +1,376 @@
+<div><app-header></app-header></div>
+
+<div class="wrapper">
+  <div class="page-header">
+    <img class="shapes circle" src="assets/img/cercuri.png" />
+
+    <i
+      class="las la-parachute-box shapes large aero"
+      style="font-size: 20vw !important;"
+    ></i>
+
+    <div class="card searchcomponent content-center col-sm-9 col-md-9">
+      <!-- <center> <hr class="line-danger" /></center> -->
+      <h3
+        style="text-transform: uppercase;text-align: center; margin-bottom: 20px;"
+      >
+        Book Your Dream Holiday Package
+      </h3>
+      <form autocomplete="off">
+        <div class="row">
+          <div class="col-md-6 col-sm-12">
+            <br />
+           
+            <p style="text-align: left;">Destination</p>
+            <fieldset>
+              <select
+                class="form-control"
+                [(ngModel)]="destination"
+                name="destination"
+              >
+                <option value="Destination" disabled selected hidden
+                  >Destination</option
+                >
+                <option
+                  *ngFor="let city of cities"
+                  class="bg-dark"
+                  selected
+                  [(ngValue)]="city"
+                >
+                  {{ city.city }}
+                </option>
+              </select>
+            </fieldset>
+          </div>
+          <br />
+          <div class="col-md-3 col-sm-12">
+            <br />
+            <p style="text-align: left;">Plan Date</p>
+            <input
+              type="text"
+              placeholder="Plan Date"
+              class="form-control"
+              bsDatepicker
+              [minDate]="minDate"
+              [maxDate]="maxDate"          
+              [bsConfig]="{ isAnimated: true, containerClass: 'theme-red' }"
+              [(ngModel)]="date"
+              
+              name="date"
+            />
+          </div>
+
+          <div class="col-md-3 col-sm-12">
+            <br /><br />
+            <button
+              class="btn btn-danger btn-round"
+              data-animation="true"
+              data-container="body"
+              placement="right"
+              (click)="enableFilter()"
+            >
+              Search Packages
+            </button>
+          </div>
+          <div *ngIf="dateMistake" style="width: 100%;">
+            <alert [type]="'info'">
+              Invalid Date
+            </alert>
+          </div>
+          <div *ngIf="sourcecheck" style="width: 100%;">
+            <alert [type]="'info'">
+              Source and destination should not be same
+            </alert>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <br><br>
+  <div
+    class="row"
+    *ngIf="!errorStatus && !clearOnButtonClick && !sourcecheck && overlayStatus"
+  >
+    <div class="col-md-6 col-sm-12" *ngFor="let d of packages">
+      <div class="card mb-3 holiday">
+        <img
+          class="card-img-top"
+          src="{{ d.imageurl[0] }}"
+          alt="Card image cap"
+        />
+
+        <div class="card-body">
+          <span class="badge badge-pill badge-info">
+            {{ d.package_type }}
+          </span>
+          <span class="badge badge-pill badge-danger"> {{ d.days }} Days </span>
+          <span class=" badge badge-pill badge-danger">
+            {{ d.nights }} Nights
+          </span>
+
+          <h4
+            class="card-title hotelname"
+            style="text-transform: uppercase;font-weight: bold;"
+          >
+            {{ d.package_name }}
+          </h4>
+          <h5
+            class="card-title"
+            style="text-transform: capitalize;font-weight: bold;"
+          >
+            {{ d.destination }}
+          </h5>
+          <div class="cintainer">
+            <div class="row">
+              <div class="col-6">
+                Price <br />
+                <h3
+                  class="card-title price"
+                  style="font-weight: bold;vertical-align: middle;"
+                >
+                  &#x20B9; {{ d.budget }}
+                </h3>
+                <a class="btn btn-info btn-sm btn-modal" (click)="openNav(d)">
+                  <p>Know More</p>
+                </a>
+              </div>
+              <div class="col-6">
+                <p style="text-transform: capitalize;">
+                  Included in this package <br />
+                  <span
+                    ><i class="las la-plane-departure"></i>&nbsp; Flight</span
+                  >&nbsp;&nbsp;&nbsp;
+                  <span><i class="las la-hotel"></i>&nbsp; Hotels</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="errorStatus">
+    <alert [type]="'info'">
+      Sorry! No Packages Available
+    </alert>
+  </div>
+</div>
+<!-- body -->
+<!-- OVERLAY -->
+<div id="myNav" class="overlay" *ngIf="overlayStatus">
+  <!-- Button to close the overlay navigation -->
+  <a href="javascript:void(0)" class="closebtn" (click)="closeNav()">&times;</a>
+  <!-- Overlay content -->
+  <div class="overlay-content">
+    <h3
+      style="color: white;"
+      style="padding: 0;margin: -100px 0 30px 0; text-transform: uppercase;font-weight: bold;"
+    >
+      {{ overlayData.package_name }}
+    </h3>
+
+    <div class="bs-example">
+      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Carousel indicators -->
+
+        <!-- Wrapper for carousel items -->
+        <div>
+          <div class="carousel-inner">
+            <div
+              class="carousel-item active"
+              *ngIf="(overlayData?.imageurl)[1]"
+            >
+              <img src="{{ overlayData.imageurl[1] }}" />
+            </div>
+            <div class="carousel-item" *ngIf="overlayData.imageurl[2]">
+              <img src="{{ (overlayData?.imageurl)[2] }}" />
+            </div>
+            <div class="carousel-item" *ngIf="overlayData.imageurl[3]">
+              <img src="{{ (overlayData?.imageurl)[3] }}" />
+            </div>
+            <div class="carousel-item" *ngIf="overlayData.imageurl[4]">
+              <img src="{{ (overlayData?.imageurl)[4] }}" />
+            </div>
+            <div class="carousel-item" *ngIf="overlayData.imageurl[5]">
+              <img src="{{ (overlayData?.imageurl)[5] }}" />
+            </div>
+            <div class="carousel-item" *ngIf="overlayData.imageurl[6]">
+              <img src="{{ (overlayData?.imageurl)[6] }}" />
+            </div>
+            <div class="carousel-item" *ngIf="overlayData.imageurl[7]">
+              <img src="{{ (overlayData?.imageurl)[7] }}" />
+            </div>
+          </div>
+        </div>
+        <!-- Carousel controls -->
+        <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+          <span
+            style="vertical-align:middle;"
+            class="carousel-control-prev-icon"
+          ></span>
+        </a>
+        <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+          <span
+            style="vertical-align:middle;"
+            class="carousel-control-next-icon"
+          ></span>
+        </a>
+      </div>
+    </div>
+    <br />
+    <p style="color: white;font-weight: bold;">
+      Package Details
+    </p>
+    <div class="desc">
+      <p>{{ overlayData.package_description }}</p>
+    </div>
+    <div class="container weather-details">
+      <div class="row">
+        <div class="col">
+          <div class="weather">
+            <p></p>
+            <div class="box"></div>
+            <div class="box_inner_shadow"></div>
+            <div class="box_inner"></div>
+            <div class="box_inner_tri_shadow"></div>
+            <div class="box_inner_tri"></div>
+            <div class="location"></div>
+            <div class="mountain1"></div>
+            <div class="mountain2"></div>
+            <div class="tri1"></div>
+            <div class="tri2"></div>
+            <div class="time" style="font-weight: bold;font-size: 30px;">
+              {{ currentTime }}
+            </div>
+            <div class="date" style="font-weight: bold;font-size: 20px;">
+              {{ currentDate }}
+            </div>
+            <div class="cloud"></div>
+            <div class="temp">{{ weatherData.main.temp }}&deg;C</div>
+            <div class="cond">{{ weatherData.weather.main }}</div>
+            <div class="loc" style="font-weight: bold;font-size: 20px;">
+              {{ weatherData.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row" style="margin-bottom: 100px;">
+        <div class="col" style="padding: 20px;margin: 30px;text-align: left;">
+          <p style="color: white;font-weight: bold;">
+            Package Highlights
+          </p>
+          <div *ngFor="let f of overlayData.highlight">
+            <p class="card-text">
+              {{ f }}
+            </p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="col" style="padding: 20px;margin: 30px;text-align: left;">
+            <p>Price</p>
+            <h2 class="card-title price" style="font-weight: bold;">
+              &#x20B9; {{ overlayData.budget }}
+            </h2>
+          </div>
+          <button
+            data-toggle="collapse"
+            *ngIf="!successful"
+            type="button"
+            class="btn btn-danger"
+            data-target="#demo"
+          >
+            Book Now
+          </button>
+        </div>
+      </div>
+      <div class="row collapse" id="demo" *ngIf="!successful">
+        <div class="col">
+          <form
+            class="card"
+            style="padding: 50px;"
+            [formGroup]="cardDetailsForm"
+            (ngSubmit)="booking()"
+          >
+            <div class="form-group">
+              <label for="exampleInputEmail1">Card Number</label>
+              <input
+                formControlName="cardNumber"
+                type="number"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+                placeholder="XXXX XXXX XXXX XXXX"
+              />
+              <small id="emailHelp" class="form-text text-muted"
+                >We'll never share your card with anyone else.</small
+              >
+            </div>
+
+            <div
+              class="invalid-feedback"
+              *ngIf="cardDetailsForm.get('cardNumber').hasError('required')"
+              class="text-danger"
+            >
+              Card Number is Mandatory
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">CVV</label>
+              <input
+                formControlName="cvv"
+                type="number"
+                class="form-control"
+                id="exampleInputPassword1"
+                placeholder="cvv"
+                maxlength="3"
+              />
+            </div>
+
+            <div
+              class="invalid-feedback"
+              *ngIf="cardDetailsForm.get('cvv').hasError('required')"
+              class="text-danger"
+            >
+              CVV is Mandatory
+            </div>
+
+            <button
+              class="btn btn-danger btn-sm"
+              routerLinkActive="router-link-active"
+              target="_blank"
+              style="text-decoration: none;"
+            >
+              <span style="color: white;">Confirm Booking</span>
+            </button>
+          </form>
+          <div><br /><br /></div>
+        </div>
+      </div>
+      
+      <alert [type]="'info'" *ngIf="successful">
+        {{ message }}
+      </alert>
+      <br /><br />
+    </div>
+  </div>
+</div>
+<!-- OVERLAY END-->
+<!-- footer -->
+<div>
+  <app-footer></app-footer>
+</div>
+<div *ngIf="!overlayStatus">
+  <ngx-spinner
+    bdOpacity="0.9"
+    bdColor="rgba(47,44,44,0.57)"
+    size="medium"
+    color="#e00909"
+    type="ball-climbing-dot"
+    [fullScreen]="true"
+  >
+    <p style="color: white">Fetching Holiday Packages...</p>
+  </ngx-spinner>
+</div>

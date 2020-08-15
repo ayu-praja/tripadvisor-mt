@@ -1,0 +1,672 @@
+<app-header></app-header>
+<div class="wrapper">
+  <div class="page-header">
+    <img class="shapes circle" loading="lazy" src="assets/img/cercuri.png" />
+
+    <i class="las la-hotel shapes flight"></i>
+
+    <div class="content-center card searchcomponent col-lg-5 col-md-6">
+      <!-- <center> <hr class="line-danger" /></center> -->
+      <h3 style="text-transform: uppercase;">Book Your Hotel Today</h3>
+
+      <form autocomplete="off">
+        <div class="row">
+          <div class="col-md-3 col-sm-12">
+            <p style="text-align: left;">City</p>
+            <fieldset>
+              <select class="form-control" [(ngModel)]="city" name="city">
+                <option value="" disabled selected>City Name</option>
+                <option
+                  *ngFor="let city of cities"
+                  class="bg-dark"
+                  selected
+                  [(ngValue)]="city"
+                >
+                  {{ city.city }}
+                </option>
+              </select>
+            </fieldset>
+            <br />
+          </div>
+
+          <div class="col-md-3 col-sm-12">
+            <p style="text-align: left;">Check In</p>
+            <input
+              type="text"
+              placeholder="Booking From"
+              class="form-control"
+              [minDate]="minDateFrom"
+              [maxDate]="maxDateFrom"
+              [(ngModel)]="dateFrom"
+              name="dateForm"
+              bsDatepicker
+              [bsConfig]="{ isAnimated: true, containerClass: 'theme-red' }"
+              tooltip="Date of Journey"
+            />
+            <br />
+          </div>
+          <div class="col-md-3 col-sm-12">
+            <p style="text-align: left;">Check Out</p>
+            <input
+              type="text"
+              placeholder="Booking Till"
+              class="form-control"
+              [minDate]="dateFrom"
+              [maxDate]="maxDateTo"
+              [(ngModel)]="dateTo"
+              name="dateTo"
+              bsDatepicker
+              [bsConfig]="{ isAnimated: true, containerClass: 'theme-red' }"
+              data-container="body"
+              tooltip="Date of Journey"
+            />
+            <br />
+          </div>
+          <div class="col-md-3 col-sm-12">
+            <!-- <button
+              class="btn btn-danger btn-fab btn-icon btn-round btn-sm"
+              data-animation="true"
+              data-container="body"
+              placement="right"
+              (click)="enableHotellist()"
+              tooltip="Search"
+            >
+              <i class="tim-icons icon-zoom-split"></i>
+            </button> -->
+            <br />
+            <button
+              class="btn btn-danger btn-round"
+              data-animation="true"
+              data-container="body"
+              placement="right"
+              (click)="enableHotellist()"
+            >
+              Search Hotels
+            </button>
+          </div>
+          <div *ngIf="dateMistake" style="width: 100%;">
+            <alert [type]="'info'">
+              Invalid Date
+            </alert>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <br /><br />
+      <!-- RESPONSIVE -->
+      <div class="col-sm-12" *ngIf="sideFilterCheck && !errorStatus">
+        <div class="card sidenavcomponentresponsive">
+          <form autocomplete="off">
+            Filters
+
+            <p>Sort By</p>
+
+            <div
+              class="form-check form-check-radio form-check-inline form-group"
+            >
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="inlineRadioOptions"
+                  id="priceradio"
+                  value="price"
+                  [(ngModel)]="price"
+                />
+                Price
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+
+            <b>
+              <p>Number Of Hotel Stars</p>
+            </b>
+            <div class="form-check form form-check-inline">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="inlineCheckbox10"
+                  id="stops0radio"
+                  value="1stars"
+                  [(ngModel)]="star1"
+                />
+                1 Star
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="inlineCheckbox11"
+                  id="stops1radio"
+                  value="2star"
+                  [(ngModel)]="star2"
+                />
+                2 Star
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="inlineCheckbox12"
+                  id="stops2radio"
+                  value="3star"
+                  [(ngModel)]="star3"
+                />
+                3 Star
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="inlineCheckbox13"
+                  id="stops3radio"
+                  value="4star"
+                  [(ngModel)]="star4"
+                />
+                4 Star
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="inlineCheckbox12"
+                  id="stops2radio"
+                  value="5star"
+                  [(ngModel)]="star5"
+                />
+                5 Star
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+            <br />
+            <br />
+
+            <b>
+              <p>Hotel Facilities</p>
+            </b>
+            <div class="form-check lineheight form-check-inline">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="inlineCheckbox1"
+                  id="aircondition"
+                  value="aircondition"
+                  [(ngModel)]="aircondition"
+                />
+                Air Condition
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+            <div class="form-check lineheight form-check-inline">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="inlineCheckbox2"
+                  id="television"
+                  value="television"
+                  [(ngModel)]="television"
+                />
+                Television
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+          
+            <div class="form-check lineheight form-check-inline">
+              <label class="form-check-label">
+                <br>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="inlineCheckbox2"
+                  id="freewifi"
+                  value="freewifi"
+                  [(ngModel)]="freewifi"
+                />
+                Free Wi-Fi
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- RESPONSIVE -->
+    </div>
+    <div class="row">
+      <div
+        class="col-md-3 .d-sm-none .d-md-block .d-lg-block .d-xl-block"
+        *ngIf="sideFilterCheck && !errorStatus"
+      >
+        <div class="card sidenavcomponent">
+          <form autocomplete="off">
+            Filters
+
+            <p>Sort By</p>
+
+            <div
+              class="form-check form-check-radio form-check-inline form-group"
+            >
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="inlineRadioOptions"
+                  id="priceradio"
+                  value="price"
+                  [(ngModel)]="price"
+                />
+                Price
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+
+            <b>
+              <p>Number Of Hotel Stars</p>
+            </b>
+            <div class="form-check form">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="inlineCheckbox10"
+                  id="stops0radio"
+                  value="1stars"
+                  [(ngModel)]="star1"
+                />
+                1 Star
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="inlineCheckbox11"
+                  id="stops1radio"
+                  value="2star"
+                  [(ngModel)]="star2"
+                />
+                2 Star
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="inlineCheckbox12"
+                  id="stops2radio"
+                  value="3star"
+                  [(ngModel)]="star3"
+                />
+                3 Star
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="inlineCheckbox13"
+                  id="stops3radio"
+                  value="4star"
+                  [(ngModel)]="star4"
+                />
+                4 Star
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="inlineCheckbox12"
+                  id="stops2radio"
+                  value="5star"
+                  [(ngModel)]="star5"
+                />
+                5 Star
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+            <br />
+
+            <b>
+              <p>Hotel Facilities</p>
+            </b>
+            <div class="form-check lineheight">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="inlineCheckbox1"
+                  id="aircondition"
+                  value="aircondition"
+                  [(ngModel)]="aircondition"
+                />
+                Air Condition
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+            <div class="form-check lineheight">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="inlineCheckbox2"
+                  id="television"
+                  value="television"
+                  [(ngModel)]="television"
+                />
+                Television
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+           
+            <div class="form-check lineheight">
+              <label class="form-check-label">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  name="inlineCheckbox2"
+                  id="freewifi"
+                  value="freewifi"
+                  [(ngModel)]="freewifi"
+                />
+                Free Wi-Fi
+                <span class="form-check-sign"></span>
+              </label>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div *ngIf="errorStatus" style="width: 100%;">
+        <alert [type]="'info'">
+          Sorry! No Hotels are Available
+        </alert>
+      </div>
+
+      <div
+        class="col-md-9 col-sm-12"
+        *ngIf="overlayStatus && !dateMistake && !errorStatus"
+      >
+        <section>
+          <div class="container-fluid">
+            <div
+              class="card module"
+              *ngFor="
+                let d of hoteldata
+                  | hotelsorting: price
+                  | stars: star1:star2:star3:star4:star5
+                  | hotelfacility: aircondition:television:ceilingfan:freewifi
+              "
+            >
+              <div class="row" *ngIf="d">
+                <div class="col-md-4">
+                  <img src="{{ d.images[0] }}" class="img-fluid" />
+                  <div class="hotel-desc container">
+                    <div class="row">
+                      <div col-4 space>
+                        <span class="card-text">Price</span>
+                        <h3 class="card-title price" style="font-weight: bold;">
+                          &#x20B9; {{ d.price }}
+                        </h3>
+                        <span class="card-text perroom"
+                          >per room/per night</span
+                        >
+                        <br />
+                      </div>
+
+                      <div class="col-1"></div>
+                      <div class="col">
+                        User Rating
+                        <br />
+                        <star-rating
+                          value="{{ d.reviewRating }}"
+                          totalstars="5"
+                          checkedcolor="yellow"
+                          uncheckedcolor="grey"
+                          size="20px"
+                          readonly="true"
+                        ></star-rating>
+                        <span class="card-text perroom"
+                          >{{ d.reviewCount }} reviews</span
+                        >
+                        <br />
+                      </div>
+                    </div>
+                    <br />
+                  </div>
+                </div>
+                <div class="col-md-8 px-3">
+                  <div class="card-block px-3">
+                    <div class="inline">
+                      <star-rating
+                        value="{{ (d?.hotelstar)[0] }}"
+                        totalstars="{{ (d?.hotelstar)[0] }}"
+                        checkedcolor="yellow"
+                        uncheckedcolor="black"
+                        size="20px"
+                        readonly="true"
+                      ></star-rating>
+                      <span class=" badge badge-info" *ngIf="d.propertyType">
+                        {{ d.propertyType }}
+                      </span>
+                      <span class=" badge badge-info" *ngIf="!d.propertyType">
+                        Hotel
+                      </span>
+                    </div>
+                    <h4
+                      class="card-title hotelname"
+                      style="text-transform: uppercase;font-weight: bold;"
+                    >
+                      {{ d.propertyName }}
+                    </h4>
+                    <br />
+                    <p class="card-text place">
+                      {{ d.address }}
+                    </p>
+                    <br />
+                    <b style="color: white;">Facilities</b>
+
+                    <div class="facillities">
+                      <div *ngFor="let f of d.facilities">
+                        <p class="card-text">
+                          {{ f }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <a
+                      class="btn btn-info btn-sm btn-modal"
+                      (click)="openNav(d)"
+                    >
+                      <p>Know More</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+             
+             
+
+              <!-- =============== -->
+              <!-- The overlay -->
+            </div>
+            
+            <!-- ================================== -->
+          </div>
+        </section>
+      </div>
+
+      <!-- OVERLAY -->
+      <div id="myNav" class="overlay" *ngIf="overlayStatus">
+        <!-- Button to close the overlay navigation -->
+        <a href="javascript:void(0)" class="closebtn" (click)="closeNav()"
+          >&times;</a
+        >
+        <!-- Overlay content -->
+        <div class="overlay-content">
+          <h3
+            style="color: white;"
+            style="padding: 0;margin: -100px 0 30px 0; text-transform: uppercase;font-weight: bold;"
+          >
+            {{ overlayData.propertyName }}
+          </h3>
+          <star-rating
+            value="{{ (overlayData?.hotelstar)[0] }}"
+            totalstars="{{ (overlayData?.hotelstar)[0] }}"
+            checkedcolor="yellow"
+            uncheckedcolor="black"
+            size="20px"
+            readonly="true"
+          ></star-rating>
+          <div class="bs-example">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+              <!-- Carousel indicators -->
+
+              <!-- Wrapper for carousel items -->
+              <div>
+                <div class="carousel-inner">
+                  <div
+                    class="carousel-item active"
+                    *ngIf="(overlayData?.images)[1]"
+                  >
+                    <img src="{{ overlayData.images[1] }}" />
+                  </div>
+                  <div class="carousel-item" *ngIf="overlayData.images[2]">
+                    <img src="{{ (overlayData?.images)[2] }}" />
+                  </div>
+                  <div class="carousel-item" *ngIf="overlayData.images[3]">
+                    <img src="{{ (overlayData?.images)[3] }}" />
+                  </div>
+                  <div class="carousel-item" *ngIf="overlayData.images[4]">
+                    <img src="{{ (overlayData?.images)[4] }}" />
+                  </div>
+                  <div class="carousel-item" *ngIf="overlayData.images[5]">
+                    <img src="{{ (overlayData?.images)[5] }}" />
+                  </div>
+                  <div class="carousel-item" *ngIf="overlayData.images[6]">
+                    <img src="{{ (overlayData?.images)[6] }}" />
+                  </div>
+                  <div class="carousel-item" *ngIf="overlayData.images[7]">
+                    <img src="{{ (overlayData?.images)[7] }}" />
+                  </div>
+                  <div class="carousel-item" *ngIf="overlayData.images[8]">
+                    <img src="{{ (overlayData?.images)[8] }}" />
+                  </div>
+                </div>
+              </div>
+              <!-- Carousel controls -->
+              <a
+                class="carousel-control-prev"
+                href="#myCarousel"
+                data-slide="prev"
+              >
+                <span
+                  style="vertical-align:middle;"
+                  class="carousel-control-prev-icon"
+                ></span>
+              </a>
+              <a
+                class="carousel-control-next"
+                href="#myCarousel"
+                data-slide="next"
+              >
+                <span
+                  style="vertical-align:middle;"
+                  class="carousel-control-next-icon"
+                ></span>
+              </a>
+            </div>
+          </div>
+          <br />
+          <p style="color: white;font-weight: bold;">
+            Hotel Description
+          </p>
+          <div class="desc">
+            <p>{{ overlayData.hotelDescription }}</p>
+          </div>
+          <div class="container">
+            <div class="row" style="margin-bottom: 100px;">
+              <div
+                class="col"
+                style="padding: 20px;margin: 30px;text-align: left;"
+              >
+                <p style="color: white;font-weight: bold;">
+                  Hotel Facilities
+                </p>
+                <div *ngFor="let f of overlayData.facilities">
+                  <p class="card-text">
+                    {{ f }}
+                  </p>
+                </div>
+              </div>
+              <div class="col">
+                <div
+                  class="col"
+                  style="padding: 20px;margin: 30px;text-align: left;"
+                >
+                  <p>Price</p>
+                  <h2 class="card-title price" style="font-weight: bold;">
+                    &#x20B9; {{ overlayData.price }}
+                  </h2>
+                </div>
+
+                <a
+                  type="button"
+                  class="btn btn-danger"
+                  href="{{ overlayData.pages[0] }}?c={{ formattedDateFrom }}|{{
+                    formattedDateTo
+                  }}"
+                  target="_blank"
+                  style="text-decoration: none;"
+                  ><span style="color: white;">Book Now</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- OVERLAY END-->
+    </div>
+  </div>
+  <br />
+  <br />
+  <div>
+    <app-footer></app-footer>
+  </div>
+</div>
+<div *ngIf="!overlayStatus && !dateMistake && !errorStatus">
+  <ngx-spinner
+    bdOpacity="0.9"
+    bdColor="rgba(47,44,44,0.57)"
+    size="medium"
+    color="#e00909"
+    type="ball-climbing-dot"
+    [fullScreen]="true"
+  >
+    <p style="color: white">Fetching Hotels...</p>
+  </ngx-spinner>
+</div>

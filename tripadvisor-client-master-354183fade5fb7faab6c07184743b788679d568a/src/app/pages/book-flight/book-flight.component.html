@@ -1,0 +1,516 @@
+<app-header></app-header>
+
+<div class="wrapper">
+  <div class="page-header">
+    <img class="shapes circle" src="assets/img/cercuri.png" />
+
+    <i class="las la-plane-departure shapes flight"></i>
+    <!-- <i class="las la-plane-departure" style="font-size: 30px;"></i> -->
+
+    <div class="content-center card searchcomponent col-lg-5 col-md-6">
+      <!-- <center> <hr class="line-danger" /></center> -->
+      <h3 style="text-transform: uppercase;">Book Your Flight Today</h3>
+
+      <form autocomplete="off" style="margin: 0 auto;">
+        <div class="row">
+          <div class="col-md-3 col-sm-12">
+            <p style="text-align: left;">Source</p>
+            <fieldset>
+              <select
+                class="form-control"
+                placeholder="Source"
+                [(ngModel)]="source"
+                name="source"
+              >
+                <option value="" disabled selected>Source</option>
+                <option
+                  *ngFor="let city of airportData"
+                  class="bg-dark"
+                  selected
+                  [(ngValue)]="city"
+                >
+                  {{ city.airportName }}
+                </option>
+              </select>
+            </fieldset>
+            <!-- <input
+              type="text"
+              class="form-control"
+              placeholder="Source"
+              [(ngModel)]="source"
+              name="source"
+            /> -->
+            <br />
+          </div>
+          <div class="col-md-3 col-sm-12">
+            <!-- <input
+              type="text"
+              class="form-control"
+              placeholder="Destination"
+              [(ngModel)]="destination"
+              name="destination"
+            /> -->
+            <p style="text-align: left;">Destination</p>
+            <fieldset>
+              <select
+                class="form-control"
+                [(ngModel)]="destination"
+                name="destination"
+              >
+                <option value="Destination" disabled selected hidden
+                  >Destination</option
+                >
+                <option
+                  *ngFor="let city of airportData"
+                  class="bg-dark"
+                  [(ngValue)]="city"
+                >
+                  {{ city.airportName }}
+                </option>
+              </select>
+            </fieldset>
+            <br />
+          </div>
+          <div class="col-md-3 col-sm-12">
+            <p style="text-align: left;">Journey Date</p>
+            <input
+              type="text"
+              placeholder="Datepicker"
+              class="form-control"
+              bsDatepicker
+              [minDate]="minDate"
+              [maxDate]="maxDate"         
+              [bsConfig]="{ isAnimated: true, containerClass: 'theme-red' }"
+              [(ngModel)]="date"
+              name="date"
+            />
+            <br />
+          </div>
+          <div class="col-md-2 col-sm-12">
+            <br />
+            <button
+              class="btn btn-danger btn-round"
+              data-animation="true"
+              data-container="body"
+              placement="right"
+              (click)="enableFilter()"
+            >
+              Search Flights
+            </button>
+          </div>
+          <div *ngIf="dateMistake" style="width: 100%;">
+            <alert [type]="'info'">
+              Invalid Date
+            </alert>
+          </div>
+          <div *ngIf="sourcecheck" style="width: 100%;">
+            <alert [type]="'info'">
+              Source and destination should not be same
+            </alert>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div *ngIf="status">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-12">
+          <br><br>
+          <div
+            class="card sidenavcomponentresponsive"
+            *ngIf="!dateMistake && !sourcecheck"
+          >
+            <form autocomplete="off">
+              <h4>
+                Filters
+                <hr class="bg-primary" />
+              </h4>
+
+              <b><p>Sort By</p></b>
+              <div
+                class="form-check form-check-radio form-check-inline form-group"
+              >
+                <label class="form-check-label">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions"
+                    id="priceradio"
+                    value="price"
+                    [(ngModel)]="price"
+                  />
+                  Price
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+
+              <b><p>Number Of Stops</p></b>
+              <div class="form-check  form-check-inline  form">
+                <label class="form-check-label">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="inlineCheckbox10"
+                    id="stops0radio"
+                    value="stops0"
+                    [(ngModel)]="stops0"
+                  />
+                  0 Stops
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+              <div class="form-check form-check-inline form-check-inline">
+                <label class="form-check-label">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="inlineCheckbox11"
+                    id="stops1radio"
+                    value="stops1"
+                    [(ngModel)]="stops1"
+                  />
+                  1 Stop
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+              <br />
+              <br />
+
+              <b><p>Service Providers</p></b>
+              <div class="form-check lineheight  form-check-inline">
+                <label class="form-check-label">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="inlineCheckbox1"
+                    id="vistararadio"
+                    value="vistara"
+                    [(ngModel)]="vistara"
+                  />
+                  Vistara
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+              <div class="form-check lineheight form-check-inline">
+                <label class="form-check-label">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="inlineCheckbox2"
+                    id="spicejetradio"
+                    value="spicejet"
+                    [(ngModel)]="spicejet"
+                  />
+                  Spice Jet
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+              <div class="form-check lineheight form-check-inline">
+                <label class="form-check-label">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="inlineCheckbox3"
+                    id="airindiaradio"
+                    value="airindia"
+                    [(ngModel)]="airindia"
+                  />
+
+                  Air India
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+              <div class="form-check  lineheight form-check-inline">
+                <label class="form-check-label">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="inlineCheckbox4"
+                    id="goairradio"
+                    value="goair"
+                    [(ngModel)]="goair"
+                  />
+                  Go Air
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+              <div class="form-check lineheight form-check-inline">
+                <label class="form-check-label">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="inlineCheckbox5"
+                    id="indigoradio"
+                    value="indigo"
+                    [(ngModel)]="indigo"
+                  />
+                  Indigo
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 .d-sm-none .d-md-block .d-lg-block .d-xl-block">
+          <!-- <app-filter-sidenav></app-filter-sidenav> -->
+          <div
+            class="card sidenavcomponent"
+            *ngIf="!dateMistake && !sourcecheck"
+          >
+            <form>
+              <h4>
+                Filters
+                <hr class="bg-primary" />
+              </h4>
+
+              <b><p>Sort By</p></b>
+              <div
+                class="form-check form-check-radio form-check-inline form-group"
+              >
+                <label class="form-check-label">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="inlineRadioOptions"
+                    id="priceradio"
+                    value="price"
+                    [(ngModel)]="price"
+                  />
+                  Price
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+
+              <b><p>Number Of Stops</p></b>
+              <div class="form-check  form-check-inline  form">
+                <label class="form-check-label">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="inlineCheckbox10"
+                    id="stops0radio"
+                    value="stops0"
+                    [(ngModel)]="stops0"
+                  />
+                  0 Stops
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+              <div class="form-check form-check-inline form-check-inline">
+                <label class="form-check-label">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="inlineCheckbox11"
+                    id="stops1radio"
+                    value="stops1"
+                    [(ngModel)]="stops1"
+                  />
+                  1 Stop
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+              <br />
+
+              <b><p>Service Providers</p></b>
+              <div class="form-check lineheight">
+                <label class="form-check-label">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="inlineCheckbox1"
+                    id="vistararadio"
+                    value="vistara"
+                    [(ngModel)]="vistara"
+                  />
+                  Vistara
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+              <div class="form-check lineheight">
+                <label class="form-check-label">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="inlineCheckbox2"
+                    id="spicejetradio"
+                    value="spicejet"
+                    [(ngModel)]="spicejet"
+                  />
+                  Spice Jet
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+              <div class="form-check lineheight">
+                <label class="form-check-label">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="inlineCheckbox3"
+                    id="airindiaradio"
+                    value="airindia"
+                    [(ngModel)]="airindia"
+                  />
+
+                  Air India
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+              <div class="form-check  lineheight">
+                <label class="form-check-label">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="inlineCheckbox4"
+                    id="goairradio"
+                    value="goair"
+                    [(ngModel)]="goair"
+                  />
+                  Go Air
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+              <div class="form-check lineheight">
+                <label class="form-check-label">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    name="inlineCheckbox5"
+                    id="indigoradio"
+                    value="indigo"
+                    [(ngModel)]="indigo"
+                  />
+                  Indigo
+                  <span class="form-check-sign"></span>
+                </label>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div *ngIf="noFlightCheck">
+          <alert [type]="'info'">
+            No Flights Available
+          </alert>
+        </div>
+        <div
+          class="col-md-9 col-sm-12"
+          *ngIf="!errorStatus && !clearOnButtonClick"
+        >
+          <!-- <app-flight></app-flight> -->
+
+          <div
+            class="card flightcomponent module"
+            *ngFor="
+              let d of flightdata
+                | sorting: price
+                | stop: stops0:stops1
+                | filterbycompany: vistara:spicejet:airindia:goair:indigo
+            "
+          >
+            <div class="container-fluid">
+              <p class="card-content">
+                <i
+                  class="fa fa-plane fname"
+                  aria-hidden="true"
+                  style="text-align: left;"
+                ></i
+                >&nbsp;
+                <b>{{ d.airline }}</b>
+              </p>
+
+              <hr class="bg-danger" style="width:100%" />
+              <div class="row">
+                <div class="col-3">
+                  <b
+                    ><p>{{ d.origin }}</p></b
+                  >
+                  <p>{{ d.deptime }}</p>
+                </div>
+                <div class="col-3 content-center duration">
+                  <p>{{ d.duration }}</p>
+                  <p>{{ d["onwardflights"].length }} Stop</p>
+                </div>
+                <div class="col-3 content-center">
+                  <div *ngIf="d['onwardflights'][0]">
+                    <b
+                      ><p>
+                        {{
+                          d["onwardflights"][d["onwardflights"].length - 1]
+                            .destination
+                        }}
+                      </p></b
+                    >
+                  </div>
+                  <div
+                    *ngIf="!d['onwardflights'][0]; &quot;content-center&quot;"
+                  >
+                    <b
+                      ><p>{{ d.destination }}</p></b
+                    >
+                  </div>
+
+                  <div
+                    *ngIf="d['onwardflights'][0]; &quot;content-center&quot;"
+                  >
+                    <p>
+                      {{
+                        d["onwardflights"][d["onwardflights"].length - 1]
+                          .arrtime
+                      }}
+                    </p>
+                  </div>
+                  <div
+                    *ngIf="!d['onwardflights'][0]; &quot;content-center&quot;"
+                  >
+                    <p>{{ d.arrtime }}</p>
+                  </div>
+                </div>
+                <div class="col-3 content-center">
+                  <p style="font-weight: bold;">
+                    &#x20B9; {{ d.fare.grossamount }}
+                  </p>
+                  <a class="btn btn-danger btn-sm" href="{{link}}" target="_blank">
+                    <p>Book</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="errorStatus">
+            <alert [type]="'warning'">
+              Sorry! No Flights are Available
+            </alert>
+          </div>
+          <br /><br />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div *ngIf="errorStatus">
+    <alert [type]="'warning'">
+      Sorry! No Packages Available
+    </alert>
+  </div> -->
+</div>
+
+<br /><br />
+<div>
+  <app-footer></app-footer>
+</div>
+<div *ngIf="!dateMistake">
+  <ngx-spinner
+    bdOpacity="0.9"
+    bdColor="rgba(47,44,44,0.57)"
+    size="medium"
+    color="#e00909"
+    type="ball-climbing-dot"
+    [fullScreen]="true"
+  >
+    <p style="color: white">Fetching Flights...</p>
+  </ngx-spinner>
+</div>

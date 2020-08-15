@@ -1,0 +1,78 @@
+{
+  "name": "trip-advisor",
+  "version": "1.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "description": "Not All Those Who Wander Are Lost.",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+   
+  ],
+  "author": "Sai Charan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/creativetimofficial/blk-design-system-angular/issues"
+  },
+  "homepage": "https://demos.creative-tim.com/blk-design-system-angular/",
+  "private": false,
+  "dependencies": {
+    "@angular/animations": "8.2.7",
+    "@angular/common": "8.2.7",
+    "@angular/compiler": "8.2.7",
+    "@angular/core": "8.2.7",
+    "@angular/fire": "^5.2.3",
+    "@angular/forms": "8.2.7",
+    "@angular/platform-browser": "8.2.7",
+    "@angular/platform-browser-dynamic": "8.2.7",
+    "@angular/router": "8.2.7",
+    "@ng-bootstrap/ng-bootstrap": "^5.1.4",
+    "chart.js": "2.8.0",
+    "core-js": "3.2.1",
+    "firebase": "^7.6.1",
+    "firebase-functions": "^3.3.0",
+    "jquery": "^3.4.1",
+    "jw-bootstrap-switch-ng2": "2.0.5",
+    "moment": "^2.24.0",
+    "ng-auto-complete": "^4.1.15",
+    "ng-starrating": "^1.0.11",
+    "ngx-bootstrap": "5.1.2",
+    "ngx-spinner": "^8.0.3",
+    "nouislider": "11.1.0",
+    "rxjs": "6.5.3",
+    "save": "^2.4.0",
+    "tslib": "1.10.0",
+    "upgrade-node-modules": "^1.2.4",
+    "zone.js": "0.10.2"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "0.803.5",
+    "@angular/cli": "^8.3.21",
+    "@angular/compiler-cli": "8.2.7",
+    "@angular/language-service": "8.2.7",
+    "@types/jasmine": "3.4.0",
+    "@types/jasminewd2": "2.0.6",
+    "@types/node": "12.7.5",
+    "codelyzer": "5.1.1",
+    "jasmine-core": "3.5.0",
+    "jasmine-spec-reporter": "4.2.1",
+    "karma": "4.3.0",
+    "karma-chrome-launcher": "3.1.0",
+    "karma-coverage-istanbul-reporter": "2.1.0",
+    "karma-jasmine": "2.0.1",
+    "karma-jasmine-html-reporter": "1.4.2",
+    "protractor": "5.4.2",
+    "ts-node": "8.4.1",
+    "tslint": "5.20.0",
+    "typescript": "3.5.3"
+  }
+}

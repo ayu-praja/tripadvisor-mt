@@ -1,0 +1,188 @@
+<div>
+  <app-header></app-header>
+  <div class="wrapper">
+    <div class="page-header">
+      <div class="page-header-image"></div>
+      <div class="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-5 col-md-6 offset-lg-0 offset-md-3">
+              <div class="square square-7" id="square7"></div>
+              <div class="square square-8" id="square8"></div>
+              <div class="card card-register">
+                <div class="card-header">
+                  <img
+                    alt="Card image"
+                    class="card-img"
+                    src="assets/img/square1-red.png"
+                  />
+
+                  <h4 class="card-title">LogIn</h4>
+                </div>
+                <div class="card-body">
+                    
+                  
+                  <div *ngIf="isLoggedIn; else loggedOut">
+                    <alert [type]="'success'">
+                      Hello <b>{{ form.username }}</b
+                      >, You have successfully Logged in. <br />You can access
+                      all the features of TripAdvisor.
+                    </alert>
+                  </div>
+
+                  <ng-template #loggedOut>
+                      
+                    <div class="row col-sm-6" style="max-width:350px;">
+                      <form
+                        autocomplete="off"
+                        [formGroup]="signInForm"
+                        style="text-align: center; margin: 0 auto;"
+                      >
+                      <button class="btn btn-danger btn-fab btn-round btn-sm" type="button" (click)="authService.GoogleAuth()">
+                          <i class="lab la-google" style="font-size: 24px;"></i>Log In With Google
+                          </button><br>
+                          <div> &nbsp;  </div>
+                        <div class="form-group input-group-prepend">
+                          
+                          <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Username"
+                            name="username"
+                            formControlName="username"
+                            required
+                          />
+                          <br />
+                          <br>
+                        </div>
+
+                        <div *ngIf="f.username.invalid && f.username.touched">
+                          <div
+                            class="invalid-feedback"
+                            *ngIf="f.username.errors?.required"
+                            class="text-danger"
+                          >
+                            User Name required
+                          </div>
+                          <div
+                            class="invalid-feedback"
+                            *ngIf="f.username.errors?.minlength"
+                            class="text-danger"
+                          >
+                            User Name Should be minimum 5 letters
+                          </div>
+                          <div
+                            class="invalid-feedback"
+                            *ngIf="f.username.errors?.pattern"
+                            class="text-danger"
+                          >
+                            Invalid Username
+                          </div>
+                          <div
+                            class="invalid-feedback"
+                            *ngIf="f.username.errors?.maxlength"
+                            class="text-danger"
+                          >
+                            User Name Should be maximum 10 letters
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <!-- <label for="password">Password</label> -->
+                          <input
+                            type="password"
+                            placeholder="Password"
+                            class="form-control"
+                            name="password"
+                            formControlName="password"
+                            required
+                            minlength="6"
+                          />
+                        </div>
+                        <div *ngIf="f.password.invalid && f.password.touched">
+                          <div
+                            class="invalid-feedback"
+                            *ngIf="f.password.errors?.required"
+                            class="text-danger"
+                          >
+                            Password required
+                          </div>
+                          <div
+                            class="invalid-feedback"
+                            *ngIf="f.password.errors?.minlength"
+                            class="text-danger"
+                          >
+                            Minimum length should be 8
+                          </div>
+                          <div
+                          class="invalid-feedback"
+                          *ngIf="f.password.errors?.maxlength"
+                          class="text-danger"
+                        >
+                          Maximum length should be 25
+                        </div>
+                          
+                          <div
+                            class="invalid-feedback"
+                            *ngIf="f.password.errors?.pattern"
+                            class="text-danger"
+                          >
+                          Password should contain 1 letter, 1 numeric and atleast 6 characters
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <button class="btn btn-danger" type="button" (click)="onSubmit()">
+                            Login
+                          </button>
+
+                          <div *ngIf="isLoginFailed" class="alert alert-danger">
+                            Login failed due to error, Please verify
+                            Username/Password
+                          </div>
+                        </div>
+                      </form>
+
+                      <p>Don't have an account?</p>
+                      &nbsp;&nbsp;&nbsp;
+                      <a
+                        [routerLink]="['/register']"
+                        routerLinkActive="router-link-active"
+                        >Sign Up</a
+                      >
+                      <p>Forgot Password ?</p>
+                      &nbsp;&nbsp;&nbsp;
+                      <a
+                        style="text-align: center; "
+                        [routerLink]="['/forgot-password']"
+                        routerLinkActive="router-link-active"
+                        >Reset it here</a
+                      >
+                    </div>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="register-bg"></div>
+          <div class="square square-1" id="square1"></div>
+          <div class="square square-2" id="square2"></div>
+          <div class="square square-3" id="square3"></div>
+          <div class="square square-4" id="square4"></div>
+          <div class="square square-5" id="square5"></div>
+          <div class="square square-6" id="square6"></div>
+        </div>
+      </div>
+    </div>
+
+    <app-footer></app-footer>
+  </div>
+</div>
+<ngx-spinner
+  bdOpacity="0.9"
+  bdColor="rgba(47,44,44,0.57)"
+  size="medium"
+  color="#e00909"
+  type="ball-climbing-dot"
+  [fullScreen]="true"
+>
+  <p style="color: white">Logging You In, Please Wait...</p>
+</ngx-spinner>

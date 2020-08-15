@@ -1,0 +1,264 @@
+<app-header></app-header>
+<div class="wrapper">
+  <div class="page-header">
+    <div class="page-header-image"></div>
+    <div class="content">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-5 col-md-6 offset-lg-0 offset-md-3">
+            <div class="square square-7" id="square7"></div>
+            <div class="square square-8" id="square8"></div>
+            <div class="card card-register">
+              <div class="card-header">
+                <img
+                  alt="Card image"
+                  class="card-img"
+                  src="assets/img/square1-red.png"
+                />
+
+                <h4 class="card-title">Register</h4>
+              </div>
+              <div class="card-body">
+                <div *ngIf="isLoggedIn; else loggedOut">
+                  Hello <b>{{ signUpForm.value.name }}</b
+                  >, You have successfully Logged in. <br />You can access all
+                  the features of TripAdvisor.
+                </div>
+
+                <div *ngIf="isSignedUp; else signupForm">
+                  <alert [type]="'success'">
+                    Your registration is successful. Please
+                    <a
+                      [routerLink]="['/auth/login']"
+                      routerLinkActive="router-link-active"
+                      style="color: brown;"
+                      >Log In</a
+                    >!
+                  </alert>
+                </div>
+
+                <ng-template #signupForm>
+                  <div class="row col-sm-6" style="max-width:350px;">
+                    <form
+                      [formGroup]="signUpForm"
+                      style="text-align: center; margin: 0 auto;"
+                      autocomplete="off"
+                    >
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Your name"
+                          name="name"
+                          formControlName="name"
+                          required
+                        />
+                      </div>
+
+                      <div *ngIf="f.name.invalid && f.name.touched">
+                        <div
+                          class="invalid-feedback"
+                          *ngIf="f.name.errors?.required"
+                          class="text-danger"
+                        >
+                          Name required
+                        </div>
+                        <div
+                          class="invalid-feedback"
+                          *ngIf="f.name.errors?.minlength"
+                          class="text-danger"
+                        >
+                          Minimum length should be 4
+                        </div>
+                        <div
+                          class="invalid-feedback"
+                          *ngIf="f.name.errors?.pattern"
+                          class="text-danger"
+                        >
+                          Only Alphabets are allowed
+                        </div>
+                        <div
+                          class="invalid-feedback"
+                          *ngIf="f.name.errors?.maxlength"
+                          class="text-danger"
+                        >
+                          Maximum length should be 30
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          placeholder="Username"
+                          class="form-control"
+                          name="username"
+                          formControlName="username"
+                          required
+                        />
+                      </div>
+
+                      <div
+                        
+                        *ngIf="f.username.invalid && f.username.touched"
+                      >
+                        
+                        <div
+                          class="invalid-feedback"
+                          *ngIf="f.username.errors?.required"
+                          class="text-danger"
+                        >
+                          User Name required
+                        </div>
+                        <div
+                          class="invalid-feedback"
+                          *ngIf="f.username.errors?.minlength"
+                          class="text-danger"
+                        >
+                          User Name Should be minimum 5 letters
+                        </div>
+                        <div
+                          class="invalid-feedback"
+                          *ngIf="f.username.errors?.pattern"
+                          class="text-danger"
+                        >
+                          Invalid Username
+                        </div>
+                        <div
+                          class="invalid-feedback"
+                          *ngIf="f.username.errors?.maxlength"
+                          class="text-danger"
+                        >
+                          User Name Should be maximum 10 letters
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          placeholder="Email"
+                          class="form-control"
+                          name="email"
+                          formControlName="email"
+                          required
+                          email
+                        />
+                        <div *ngIf="f.email.invalid && f.email.touched">
+                         
+                          <div
+                            class="invalid-feedback"
+                            *ngIf="f.email.errors?.required"
+                            class="text-danger"
+                          >
+                            Email required
+                          </div>
+                          <div
+                            class="invalid-feedback"
+                            *ngIf="f.email.errors?.pattern"
+                            class="text-danger"
+                          >
+                            Email should be in correct format like
+                            devallasaicharan@gmail.com
+                          </div>
+                        </div>
+                      </div>
+                      <div *ngIf="f.submitted && email.invalid">
+                        <div *ngIf="email.errors.required">
+                          <alert [type]="'warning'">
+                            Email is required
+                          </alert>
+                        </div>
+                        <div *ngIf="email.errors.email">
+                          <alert [type]="'warning'">
+                            Email must be a valid email address
+                          </alert>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <input
+                          type="password"
+                          placeholder="Password"
+                          class="form-control"
+                          name="password"
+                          formControlName="password"
+                          required
+                          minlength="6"
+                        />
+                      </div>
+                      <div *ngIf="f.password.invalid && f.password.touched">
+                        <div
+                          class="invalid-feedback"
+                          *ngIf="f.password.errors?.required"
+                          class="text-danger"
+                        >
+                          Password required
+                        </div>
+                        <div
+                          class="invalid-feedback"
+                          *ngIf="f.password.errors?.minlength"
+                          class="text-danger"
+                        >
+                          Minimum length should be 8
+                        </div>
+                        <div
+                          class="invalid-feedback"
+                          *ngIf="f.password.errors?.maxlength"
+                          class="text-danger"
+                        >
+                          Maximum length should be 25
+                        </div>  
+                        <div
+                          class="invalid-feedback"
+                          *ngIf="f.password.errors?.pattern"
+                          class="text-danger"
+                        >
+                        
+                          Password should contain 1 letter, 1 numeric and atleast 6 characters
+                        </div>
+
+                      </div>
+                      <div class="form-group">
+                        <button class="btn btn-danger" (click)="onSubmit()">Register</button>
+                      </div>
+                      <div
+                      *ngIf="isSignUpFailed"
+                      class="alert alert-info"
+                    >
+                    Signup failed!<br />{{ errorMessage }}
+                      
+                    </div>
+                     
+                    </form>
+                    <p>Already have an account?</p>
+                    &nbsp;&nbsp;&nbsp;
+                    <a
+                      [routerLink]="['/auth/login']"
+                      routerLinkActive="router-link-active"
+                      >Log In</a
+                    >
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="register-bg"></div>
+        <div class="square square-1" id="square1"></div>
+        <div class="square square-2" id="square2"></div>
+        <div class="square square-3" id="square3"></div>
+        <div class="square square-4" id="square4"></div>
+        <div class="square square-5" id="square5"></div>
+        <div class="square square-6" id="square6"></div>
+      </div>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>
+<ngx-spinner
+  bdOpacity="0.9"
+  bdColor="rgba(47,44,44,0.57)"
+  size="medium"
+  color="#e00909"
+  type="ball-climbing-dot"
+  [fullScreen]="true"
+>
+  <p style="color: white">Thanks for Registering, Please Wait...</p>
+</ngx-spinner>

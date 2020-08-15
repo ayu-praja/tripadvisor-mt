@@ -1,0 +1,64 @@
+<div class="container-fluid" style="overflow: hidden;">
+<div class="row" style="overflow: none;">
+  <div class="col-50">
+    <div
+      class="container"
+      class="bg-dark"
+      style="width: 50%; margin: 50px auto;padding: 40px;"
+    >
+      <form autocomplete="off">
+        <div class="row">
+          <div class="col-50">
+            <h3>Payment</h3>
+
+            <label for="cname">Name on Card</label>
+            <input
+              type="text"
+              id="cname"
+              name="cardname"
+              placeholder="John More Doe"
+            />
+            <label for="ccnum">Credit card number</label>
+            <input
+              type="text"
+              id="ccnum"
+              name="cardnumber"
+              placeholder="1111-2222-3333-4444"
+            />
+            <label for="expmonth">Exp Month</label>
+            <input
+              type="text"
+              id="expmonth"
+              name="expmonth"
+              placeholder="September"
+            />
+            <div class="row">
+              <div class="col-50">
+                <label for="expyear">Exp Year</label>
+                <input
+                  type="text"
+                  id="expyear"
+                  name="expyear"
+                  placeholder="2018"
+                />
+              </div>
+              <div class="col-50">
+                <label for="cvv">CVV</label>
+                <input
+                  type="text"
+                  id="cvv"
+                  name="cvv"
+                  placeholder="352"
+                  maxlength="3"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <input type="submit" value="Continue to checkout" class="btn" />
+      </form>
+    </div>
+  </div>
+</div>
+</div>
